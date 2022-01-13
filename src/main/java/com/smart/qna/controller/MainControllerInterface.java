@@ -1,6 +1,7 @@
 package com.smart.qna.controller;
 
 
+import com.smart.qna.request.ApproveRequest;
 import com.smart.qna.request.MessageListRequest;
 import com.smart.qna.response.CommonResponse;
 import com.smart.qna.response.MessageListResponse;
@@ -17,9 +18,9 @@ public interface MainControllerInterface {
     @PostMapping("/approved/retrieve")
     CommonResponse getApprovedMessages(@RequestBody MessageListRequest messageListRequest);
 
-    @GetMapping("/messages/approve")
-    CommonResponse persistApproved(@RequestParam int id);
+    @PostMapping("/messages/persist/approved")
+    CommonResponse persistApproved(@RequestBody ApproveRequest approveRequest);
 
-    @PostMapping("/approved/priority/add")
+    @PostMapping("/approved/persist/priority")
     CommonResponse persistPriority();
 }

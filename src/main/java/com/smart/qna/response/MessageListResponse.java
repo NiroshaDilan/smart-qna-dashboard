@@ -1,7 +1,6 @@
 package com.smart.qna.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.smart.qna.dto.MessageDetails;
 import com.smart.qna.entity.TextMessage;
 import lombok.Getter;
 import lombok.Setter;
