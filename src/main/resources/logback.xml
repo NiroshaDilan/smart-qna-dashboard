@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration scan="true" scanPeriod="120 seconds">
-      <property name="LOG_HOME" value="/opt/services/logs/remittance-e-reciept/logs" />
-<!--    <property name="LOG_HOME" value="D:\\WorkspaceJAVA\\GIT\\remittance-e-reciept\\logs" />-->
+    <property name="LOG_HOME" value="D:\\logs" />
 
     <appender name="STDOUT"
               class="ch.qos.logback.core.ConsoleAppender">
@@ -17,13 +16,13 @@
 
         <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder
             by default -->
-        <file>${LOG_HOME}/RemitEreceipt.log</file>
+        <file>${LOG_HOME}/SmartQnA.log</file>
         <encoder>
             <pattern>[%date{"yyyy-MM-dd'T'HH:mm:ss,SSSZZZ"}] %-5level [%thread]%logger - %msg%n</pattern>
         </encoder>
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/archived/RemitEreceipt.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/archived/SmartQnA.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
             <!-- <maxHistory>150</maxHistory> -->
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -34,7 +33,7 @@
 
     <appender name="ERROR_LOG"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_HOME}/RemitEreceiptError.log</file>
+        <file>${LOG_HOME}/SmartQnAError.log</file>
 
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
@@ -48,7 +47,7 @@
         </encoder>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/archived/RemitEreceiptError.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/archived/SmartQnAError.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- <maxHistory>1000</maxHistory> -->
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
