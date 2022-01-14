@@ -67,14 +67,15 @@ CREATE TABLE `visitors` (
 
 CREATE TABLE `approved` (
   `id` INT(100) NOT NULL AUTO_INCREMENT,
-  `phoneno` VARCHAR(100) DEFAULT NULL COMMENT 'Unique Id',
-  `sendername` VARCHAR(100) DEFAULT NULL COMMENT 'Message Sender Name',
-  `msg` VARCHAR(10000) DEFAULT NULL COMMENT 'Visitor Message',
-  `hrbranch` VARCHAR(100) DEFAULT NULL COMMENT 'Branch Name',
-  `approveddatetime` DATETIME DEFAULT NULL COMMENT 'Approved Date and Time',
-  `priority_level_1` INT(10) DEFAULT 3 COMMENT 'Message Priority Level 1',
-  `priority_level_2` INT(10) DEFAULT 10 COMMENT 'Message Priority Level 2',
-  `prioratizeddatetime` DATETIME DEFAULT NULL COMMENT 'Prioratized Date and Time',
+  `phoneno` VARCHAR(100) DEFAULT NULL COMMENT ''Unique Id'',
+  `sendername` VARCHAR(100) DEFAULT NULL COMMENT ''Message Sender Name'',
+  `msg` VARCHAR(10000) DEFAULT NULL COMMENT ''Visitor Message'',
+  `hrbranch` VARCHAR(100) DEFAULT NULL COMMENT ''Branch Name'',
+  `approveddatetime` DATETIME DEFAULT NULL COMMENT ''Approved Date and Time'',
+  `priority1` INT(10) DEFAULT 3 COMMENT ''Message Priority Level 1'',
+  `priority2` INT(10) DEFAULT 10 COMMENT ''Message Priority Level 2'',
+  `prioratizeddatetime` DATETIME DEFAULT NULL COMMENT ''Prioratized Date and Time'',
+  `readstatus`	VARCHAR(10) DEFAULT ''N'' COMMENT ''Read Status R=Read N=Not Read'',
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 

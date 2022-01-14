@@ -16,32 +16,35 @@ import java.util.Date;
 public class ApprovedMessage implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @Column(name="phoneno")
-    String phoneNo;
+    private String phoneNo;
 
     @Column(name = "sendername")
-    String senderName;
+    private String senderName;
 
     @Column(name="msg")
-    String message;
+    private String message;
 
     @Column(name="hrbranch")
-    String hrBranch;
+    private String hrBranch;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="approveddatetime")
-    Date approvedDateTime;
+    private Date approvedDateTime;
 
-    @Column(name="priority_level_1")
-    int priorityLevel_1;
+    @Column(name="priority1")
+    private int priority1;
 
-    @Column(name="priority_level_2")
-    int priorityLevel_2;
+    @Column(name="priority2")
+    private int priority2;
 
     @Column(name="prioratizeddatetime")
     @Temporal(TemporalType.TIMESTAMP)
-    Date prioratizedDateTime;
+    private Date prioratizedDateTime;
+
+    @Column(name="readstatus")
+    private String readStatus;
 
 }
