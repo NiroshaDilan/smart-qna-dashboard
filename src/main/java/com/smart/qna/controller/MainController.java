@@ -4,10 +4,7 @@ import com.smart.qna.entity.ApprovedMessage;
 import com.smart.qna.entity.TextMessage;
 import com.smart.qna.exception.AlreadyApprovedException;
 import com.smart.qna.exception.AlreadyRejectedException;
-import com.smart.qna.request.AnsweredRequest;
-import com.smart.qna.request.ApproveRequest;
-import com.smart.qna.request.MessageListRequest;
-import com.smart.qna.request.PrioritizeRequest;
+import com.smart.qna.request.*;
 import com.smart.qna.response.*;
 import com.smart.qna.service.QuestionnaireHandlerService;
 import com.smart.qna.util.Util;
@@ -38,10 +35,27 @@ public class MainController implements MainControllerInterface {
         MessageListResponse messageListResponse = new MessageListResponse();
         try {
             Page<TextMessage> textMessagePage = questionnaireHandlerService.getSmsMessages(messageListRequest);
+            textMessagePage.forEach(textMessage -> {
+                StringBuilder details = new StringBuilder();
+                if(textMessage.getMobileNo()!=null&&!textMessage.getMobileNo().equals("")){
+                    details.append(textMessage.getMobileNo());
+                    details.append(" / ");
+                }else{
+                    details.append("NOT FOUND / ");
+                }
+                if(textMessage.getBranch()!=null&&!textMessage.getBranch().equals("")){
+                    details.append(textMessage.getBranch());
+                }else{
+                    details.append("NOT FOUND");
+                }
+                textMessage.setDetails(details.toString());
+            });
             messageListResponse.setCurrentPage(messageListRequest.getPage());
             messageListResponse.setTotalPages(textMessagePage.getTotalPages());
             messageListResponse.setTotalElements(textMessagePage.getTotalElements());
             messageListResponse.setMessageDetailsList(textMessagePage.toList());
+
+
             LOGGER.info("Inside getMessages : Response Success : Number of Pages ::{}", textMessagePage.getTotalPages());
         } catch (Exception e) {
             LOGGER.error("Error when getting message List", e);
@@ -111,12 +125,16 @@ public class MainController implements MainControllerInterface {
     }
 
     @Override
-    public CommonResponse persistPriority(@RequestBody PrioritizeRequest prioritizeRequest) {
+    public CommonResponse persistPriority(@RequestBody PrioritizeListRequest prioritizeListRequest) {
         LOGGER.info("Inside persistApproved");
         CommonResponse commonResponse = new CommonResponse();
         try {
-            int updatedCount = questionnaireHandlerService.persistPrioritized(prioritizeRequest);
-            if (updatedCount > 0) {
+            final int[] updatedArray = {0};
+            prioritizeListRequest.getPrioritizeList().forEach(prioritizeRequest -> {
+                updatedArray[0] += questionnaireHandlerService.persistPrioritized(prioritizeRequest);
+
+            });
+            if(updatedArray[0]>0){
                 commonResponse.setResponseCode(Util.CODE_SUCCESS);
                 commonResponse.setResponseStatus(Util.STATUS_SUCCESS);
                 return commonResponse;

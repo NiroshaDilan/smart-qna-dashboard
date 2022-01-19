@@ -1,10 +1,7 @@
 package com.smart.qna.controller;
 
 
-import com.smart.qna.request.AnsweredRequest;
-import com.smart.qna.request.ApproveRequest;
-import com.smart.qna.request.MessageListRequest;
-import com.smart.qna.request.PrioritizeRequest;
+import com.smart.qna.request.*;
 import com.smart.qna.response.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +17,7 @@ public interface MainControllerInterface {
     CommonResponse persistApproved(@RequestBody ApproveRequest approveRequest);
 
     @PostMapping("/approved/persist/priority")
-    CommonResponse persistPriority(@RequestBody PrioritizeRequest PrioritizeRequest);
+    CommonResponse persistPriority(@RequestBody PrioritizeListRequest prioritizeListRequest);
 
     @GetMapping("/messages/view")
     PrioritizedMessageResponse getPrioritizedMessage();

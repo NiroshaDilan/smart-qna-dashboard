@@ -32,4 +32,6 @@ public class TextMessage implements Serializable {
     @Column(name="hrbranch")
     private String branch;
 
+    private transient String details;
+
 }
