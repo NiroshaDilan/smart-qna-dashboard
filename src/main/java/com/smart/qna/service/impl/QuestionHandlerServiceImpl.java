@@ -45,7 +45,7 @@ public class QuestionHandlerServiceImpl implements QuestionnaireHandlerService {
 
         Pageable pageWithElements = PageRequest.of(messageListRequest.getPage(), messageListRequest.getSize(), Sort.by("id"));
 
-        return receivedSmsRepository.findAllByStatus("S", pageWithElements);
+        return receivedSmsRepository.findAllByStatus("P", pageWithElements);
 
     }
 

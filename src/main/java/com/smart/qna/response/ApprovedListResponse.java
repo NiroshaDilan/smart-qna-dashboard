@@ -18,6 +18,7 @@ public class ApprovedListResponse {
     private List<ApprovedMessage> approvedMessageList;
     private int currentPage;
     private int totalPages;
+    private long totalElements;
 
 }
 

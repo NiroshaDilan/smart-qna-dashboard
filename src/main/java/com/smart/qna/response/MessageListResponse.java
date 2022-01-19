@@ -17,5 +17,6 @@ public class MessageListResponse {
     private List<TextMessage> messageDetailsList;
     private int currentPage;
     private int totalPages;
+    private long totalElements;
 
 }

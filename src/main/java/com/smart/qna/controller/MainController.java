@@ -14,10 +14,12 @@ import com.smart.qna.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/smartqna")
 public class MainController implements MainControllerInterface {
@@ -38,6 +40,7 @@ public class MainController implements MainControllerInterface {
             Page<TextMessage> textMessagePage = questionnaireHandlerService.getSmsMessages(messageListRequest);
             messageListResponse.setCurrentPage(messageListRequest.getPage());
             messageListResponse.setTotalPages(textMessagePage.getTotalPages());
+            messageListResponse.setTotalElements(textMessagePage.getTotalElements());
             messageListResponse.setMessageDetailsList(textMessagePage.toList());
             LOGGER.info("Inside getMessages : Response Success : Number of Pages ::{}", textMessagePage.getTotalPages());
         } catch (Exception e) {
@@ -54,6 +57,7 @@ public class MainController implements MainControllerInterface {
             Page<ApprovedMessage> approvedMessages = questionnaireHandlerService.getApprovedMessages(messageListRequest);
             approvedListResponse.setCurrentPage(messageListRequest.getPage());
             approvedListResponse.setTotalPages(approvedMessages.getTotalPages());
+            approvedListResponse.setTotalElements(approvedMessages.getTotalElements());
             approvedListResponse.setApprovedMessageList(approvedMessages.toList());
             LOGGER.info("Inside getApprovedMessages : Response Success : Number of Pages ::{}", approvedMessages.getTotalPages());
 
