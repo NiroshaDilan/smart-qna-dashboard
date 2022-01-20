@@ -91,6 +91,7 @@ public class QuestionHandlerServiceImpl implements QuestionnaireHandlerService {
     public int persistPrioritized(PrioritizeRequest prioritizeRequest) {
         LOGGER.info("Inside the persistPrioritized method");
         String currentDateNTime = Util.getDateTimeString(new Date());
+        LOGGER.info("Inside the persistPrioritized method ::{},{}",prioritizeRequest.getPriority1(),prioritizeRequest.getPriority2());
         return approvedSmsRepository.prioritizeApproved(prioritizeRequest.getPriority1(), prioritizeRequest.getPriority2(),
                 currentDateNTime, prioritizeRequest.getId());
 

@@ -128,13 +128,12 @@ public class MainController implements MainControllerInterface {
     public CommonResponse persistPriority(@RequestBody PrioritizeListRequest prioritizeListRequest) {
         LOGGER.info("Inside persistApproved");
         CommonResponse commonResponse = new CommonResponse();
-        try {
-            final int[] updatedArray = {0};
-            prioritizeListRequest.getPrioritizeList().forEach(prioritizeRequest -> {
-                updatedArray[0] += questionnaireHandlerService.persistPrioritized(prioritizeRequest);
-
-            });
-            if(updatedArray[0]>0){
+        int updatedCount = 0;
+        try{
+            for (PrioritizeRequest prioritizeRequest: prioritizeListRequest.getPrioritizeList()) {
+                updatedCount += questionnaireHandlerService.persistPrioritized(prioritizeRequest);
+            };
+            if(updatedCount>0){
                 commonResponse.setResponseCode(Util.CODE_SUCCESS);
                 commonResponse.setResponseStatus(Util.STATUS_SUCCESS);
                 return commonResponse;
