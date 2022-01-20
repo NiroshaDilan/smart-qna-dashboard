@@ -1,5 +1,6 @@
 package com.smart.qna.controller;
 
+import com.smart.qna.Enumeration.ApproveStatus;
 import com.smart.qna.entity.ApprovedMessage;
 import com.smart.qna.entity.TextMessage;
 import com.smart.qna.exception.AlreadyApprovedException;
@@ -31,7 +32,7 @@ public class MainController implements MainControllerInterface {
 
     @Override
     public MessageListResponse getMessages(MessageListRequest messageListRequest) {
-        LOGGER.info("Inside getMessages");
+        LOGGER.info("Inside getMessages :: Request :: {} ",messageListRequest.toString());
         MessageListResponse messageListResponse = new MessageListResponse();
         try {
             Page<TextMessage> textMessagePage = questionnaireHandlerService.getSmsMessages(messageListRequest);
@@ -60,12 +61,13 @@ public class MainController implements MainControllerInterface {
         } catch (Exception e) {
             LOGGER.error("Error when getting message List", e);
         }
+        LOGGER.info("Inside getMessages :: Response :: {} ",messageListResponse.toString());
         return messageListResponse;
     }
 
     @Override
     public ApprovedListResponse getApprovedMessages(MessageListRequest messageListRequest) {
-        LOGGER.info("Inside getApprovedMessages");
+        LOGGER.info("Inside getApprovedMessages :: Request :: {} ",messageListRequest.toString());
         ApprovedListResponse approvedListResponse = new ApprovedListResponse();
         try {
             Page<ApprovedMessage> approvedMessages = questionnaireHandlerService.getApprovedMessages(messageListRequest);
@@ -79,17 +81,17 @@ public class MainController implements MainControllerInterface {
         } catch (Exception e) {
             LOGGER.error("Error when getting message approved List", e);
         }
-
+        LOGGER.info("Inside getApprovedMessages :: Response :: {} ",approvedListResponse.toString());
         return approvedListResponse;
     }
 
     @Override
     public CommonResponse persistApproved(ApproveRequest approveRequest) {
-        LOGGER.info("Inside persistApproved");
+        LOGGER.info("Inside persistApproved  :: Request :: {} ",approveRequest.toString());
         CommonResponse commonResponse = new CommonResponse();
         try {
             int updatedCount = questionnaireHandlerService.updateApproved(approveRequest);
-            if (updatedCount > 0) {
+            if (updatedCount > 0 && approveRequest.getStatus().equals(ApproveStatus.APPROVED.toString())) {
                 int insertCount = questionnaireHandlerService.persistApproved(approveRequest);
                 if (insertCount > 0) {
                     commonResponse.setResponseCode(Util.CODE_SUCCESS);
@@ -99,6 +101,10 @@ public class MainController implements MainControllerInterface {
                     commonResponse.setResponseCode(Util.CODE_FAILED_NO_RECORDS_INSERTED);
                     commonResponse.setErrorDescription(Util.LABEL_FAILED_NO_RECORDS_INSERTED);
                 }
+            } else if(updatedCount > 0 && approveRequest.getStatus().equals(ApproveStatus.REJECTED.toString())){
+                commonResponse.setResponseCode(Util.CODE_SUCCESS);
+                commonResponse.setResponseStatus(Util.STATUS_SUCCESS);
+                return commonResponse;
             } else {
                 commonResponse.setResponseCode(Util.CODE_FAILED_NO_RECORDS_UPDATED);
                 commonResponse.setErrorDescription(Util.LABEL_FAILED_NO_RECORDS_UPDATED);
@@ -121,12 +127,13 @@ public class MainController implements MainControllerInterface {
             commonResponse.setErrorDescription(Util.LABEL_FAILED_UPDATE_EXCEPTION_OCCURRED);
         }
         commonResponse.setResponseStatus(Util.STATUS_FAILED);
+        LOGGER.info("Inside persistApproved  :: Response :: {} ",commonResponse.toString());
         return commonResponse;
     }
 
     @Override
     public CommonResponse persistPriority(@RequestBody PrioritizeListRequest prioritizeListRequest) {
-        LOGGER.info("Inside persistApproved");
+        LOGGER.info("Inside persistApproved :: Request :: {} ",prioritizeListRequest.toString());
         CommonResponse commonResponse = new CommonResponse();
         int updatedCount = 0;
         try{
@@ -146,6 +153,7 @@ public class MainController implements MainControllerInterface {
             commonResponse.setErrorDescription(Util.LABEL_FAILED_UPDATE_EXCEPTION_OCCURRED);
         }
         commonResponse.setResponseStatus(Util.STATUS_FAILED);
+        LOGGER.info("Inside persistApproved :: Response :: {} ",commonResponse.toString());
         return commonResponse;
     }
 
@@ -170,13 +178,13 @@ public class MainController implements MainControllerInterface {
         } catch (Exception e) {
             LOGGER.error("Exception occurred when getPrioritizedMessage method called : ", e);
         }
-
+        LOGGER.info("Inside getPrioritizedMessage to view :: Response :: {}",prioritizedMessageResponse.toString());
         return prioritizedMessageResponse;
     }
 
     @Override
     public CommonResponse persistAnswered(AnsweredRequest answeredRequest) {
-        LOGGER.info("Inside persistAnswered");
+        LOGGER.info("Inside persistAnswered :: Request :: {} ",answeredRequest.toString());
         CommonResponse commonResponse = new CommonResponse();
         try {
             int updatedCount = questionnaireHandlerService.persistAnswered(answeredRequest);
@@ -193,6 +201,7 @@ public class MainController implements MainControllerInterface {
             commonResponse.setErrorDescription(Util.LABEL_FAILED_UPDATE_EXCEPTION_OCCURRED);
         }
         commonResponse.setResponseStatus(Util.STATUS_FAILED);
+        LOGGER.info("Inside persistAnswered :: Response :: {} ",commonResponse.toString());
         return commonResponse;
     }
 }
