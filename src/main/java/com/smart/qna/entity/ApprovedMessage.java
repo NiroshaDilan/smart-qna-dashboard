@@ -18,6 +18,8 @@ public class ApprovedMessage implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private transient int sequence;
+
     @Column(name="phoneno")
     private String phoneNo;
 

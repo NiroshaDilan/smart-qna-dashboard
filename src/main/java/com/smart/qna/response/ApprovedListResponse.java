@@ -19,6 +19,8 @@ public class ApprovedListResponse {
     private int currentPage;
     private int totalPages;
     private long totalElements;
+    private long totalAnswered;
+    private long totalApproved;
 
 }
 

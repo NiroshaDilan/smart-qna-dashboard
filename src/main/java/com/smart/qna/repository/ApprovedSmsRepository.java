@@ -12,6 +12,8 @@ public interface ApprovedSmsRepository extends JpaRepository<ApprovedMessage,Int
 
     Page<ApprovedMessage> findAllByReadStatus(String readStatus, Pageable pageable);
 
+    long countApprovedMessageByReadStatus(String status);
+
     @Transactional
     @Modifying
     @Query(nativeQuery=true,value="INSERT INTO approved (phoneno, sendername, msg, hrbranch,approvedDateTime,priority1,prioratizeddatetime) " +

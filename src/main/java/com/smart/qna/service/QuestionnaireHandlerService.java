@@ -20,6 +20,10 @@ public interface QuestionnaireHandlerService {
 
     int persistApproved(ApproveRequest approveRequest);
 
+    long getTotalAnswered();
+
+    long getTotalApproved();
+
     int persistPrioritized(PrioritizeRequest prioritizeRequest);
 
     int persistAnswered(AnsweredRequest answeredRequest);

@@ -88,6 +88,18 @@ public class QuestionHandlerServiceImpl implements QuestionnaireHandlerService {
     }
 
     @Override
+    public long getTotalAnswered() {
+        LOGGER.info("Inside the getTotalAnswered method");
+        return approvedSmsRepository.countApprovedMessageByReadStatus("Y");
+    }
+
+    @Override
+    public long getTotalApproved() {
+        LOGGER.info("Inside the getTotalApproved method");
+        return approvedSmsRepository.count();
+    }
+
+    @Override
     public int persistPrioritized(PrioritizeRequest prioritizeRequest) {
         LOGGER.info("Inside the persistPrioritized method");
         String currentDateNTime = Util.getDateTimeString(new Date());

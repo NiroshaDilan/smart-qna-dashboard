@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/smartqna")
@@ -74,7 +78,16 @@ public class MainController implements MainControllerInterface {
             approvedListResponse.setCurrentPage(messageListRequest.getPage());
             approvedListResponse.setTotalPages(approvedMessages.getTotalPages());
             approvedListResponse.setTotalElements(approvedMessages.getTotalElements());
-            approvedListResponse.setApprovedMessageList(approvedMessages.toList());
+            List<ApprovedMessage> approvedMessageList =new ArrayList<>();
+            AtomicInteger i = new AtomicInteger(1);
+            approvedMessages.forEach(approvedMessage -> {
+                approvedMessage.setSequence(i.getAndIncrement());
+                approvedMessageList.add(approvedMessage);
+            });
+
+            approvedListResponse.setApprovedMessageList(approvedMessageList);
+            approvedListResponse.setTotalAnswered(questionnaireHandlerService.getTotalAnswered());
+            approvedListResponse.setTotalApproved(questionnaireHandlerService.getTotalApproved());
             LOGGER.info("Inside getApprovedMessages : Response Success : Number of Pages ::{}", approvedMessages.getTotalPages());
 
 
@@ -91,7 +104,7 @@ public class MainController implements MainControllerInterface {
         CommonResponse commonResponse = new CommonResponse();
         try {
             int updatedCount = questionnaireHandlerService.updateApproved(approveRequest);
-            if (updatedCount > 0 && approveRequest.getStatus().equals(ApproveStatus.APPROVED.toString())) {
+            if (updatedCount > 0 && approveRequest.getStatus().toString().equalsIgnoreCase(ApproveStatus.APPROVED.toString())) {
                 int insertCount = questionnaireHandlerService.persistApproved(approveRequest);
                 if (insertCount > 0) {
                     commonResponse.setResponseCode(Util.CODE_SUCCESS);
