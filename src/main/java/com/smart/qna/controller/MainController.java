@@ -114,7 +114,7 @@ public class MainController implements MainControllerInterface {
                     commonResponse.setResponseCode(Util.CODE_FAILED_NO_RECORDS_INSERTED);
                     commonResponse.setErrorDescription(Util.LABEL_FAILED_NO_RECORDS_INSERTED);
                 }
-            } else if(updatedCount > 0 && approveRequest.getStatus().equals(ApproveStatus.REJECTED.toString())){
+            } else if(updatedCount > 0 && approveRequest.getStatus().toString().equalsIgnoreCase(ApproveStatus.REJECTED.toString())){
                 commonResponse.setResponseCode(Util.CODE_SUCCESS);
                 commonResponse.setResponseStatus(Util.STATUS_SUCCESS);
                 return commonResponse;
