@@ -3,10 +3,13 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://172.16.136.11:3306/smartqa
+    url: jdbc:mysql://192.168.8.139:3306/smartqa
     username: root
-    password: combank@123
+    password: 123456
+#    password: password
     driver-class-name : com.mysql.jdbc.Driver
-
-
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
 
